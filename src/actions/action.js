@@ -75,6 +75,9 @@ export function onDeleteBulk(){
 		const selectedItems = getState().selectedItems;
 		console.log("This is the state", selectedItems)
 		dispatch(deleteBulk(selectedItems))
+		dispatch(clearSelectedItems())
+		const num = getState().selectedItems.length;
+		dispatch(selectedItemsTotal(num))
 	}
 }
 
@@ -83,6 +86,9 @@ export function onMoveBulk(){
 		const selectedItems = getState().selectedItems;
 		console.log("This is the state", selectedItems)
 		dispatch(moveBulk(selectedItems))
+		dispatch(clearSelectedItems())
+		const num = getState().selectedItems.length;
+		dispatch(selectedItemsTotal(num))
 	}
 }
 
@@ -93,8 +99,10 @@ export function clearSelectedItemsArray(){
 	}
 }
 
-export function getTotalSelectedItems(){
+export function onSelectItem(item){
+
 	return (dispatch, getState) => {
+		dispatch(selectItem(item))
 		const num = getState().selectedItems.length;
 		dispatch(selectedItemsTotal(num))
 	}

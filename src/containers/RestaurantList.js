@@ -2,26 +2,24 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import {deleteItem} from '../actions/action'
 import {moveItemToTop} from '../actions/action'
-import {selectItem} from '../actions/action'
+import {onSelectItem} from '../actions/action'
 import {onDeleteBulk} from '../actions/action'
 import {onMoveBulk} from '../actions/action'
-import {clearSelectedItemsArray} from '../actions/action'
-import {getTotalSelectedItems} from '../actions/action'
 
 
 export class RestaurantList extends Component {
 
 	constructor(props) {
         super(props);
-        this.state = {items: []};
+        this.state = {items: [], totalSelectedItems: 0};
     }
 
     componentDidMount() {
-    	console.log('I am in 1');
-    	if (this.props.items) {
-	    	const { items } = this.props;
-	    	this.setState({ items })
-    	}
+    	// console.log('I am in 1');
+    	// if (this.props.items) {
+	    // 	const { items } = this.props;
+	    // 	this.setState({ items })
+    	// }
   	}
 
   	componentWillUnmount() {
@@ -31,13 +29,14 @@ export class RestaurantList extends Component {
   	//This lifecycle method is invoked everytime the parent changes the props
   	componentWillReceiveProps(nextProps){
   		console.log('I am in 2')
-    	this.setState({items: nextProps.items})
-    	this.props.clearSelectedItems()
+    	this.setState({items: nextProps.items, totalSelectedItems: nextProps.totalSelectedItems})
+    	// this.props.clearSelectedItems()
   	}
 
     render(){
     	return(
 			<div className="restaurant-list">
+                <h2>Total Selected Items: {this.state.totalSelectedItems}</h2>
 				<button onClick={() => this.props.onDeleteBulk()}>Delete Bulk</button>
 				<button onClick={() => this.props.onMoveBulk()}>Move Bulk</button>
 				<ul>{
@@ -79,16 +78,13 @@ function mapDispatchToProps(dispatch){
         	dispatch(moveItemToTop(item));
         },
         onSelectItem(item) {
-        	dispatch(selectItem(item));
+        	dispatch(onSelectItem(item));
         },
         onDeleteBulk(){
         	dispatch(onDeleteBulk());
         },
         onMoveBulk(){
         	dispatch(onMoveBulk());
-        },
-        clearSelectedItems(){
-        	dispatch(clearSelectedItemsArray());
         }
 	}
 }

@@ -5,7 +5,7 @@ import RestaurantList from '../containers/RestaurantList'
 
 export const App = () => (
 	<div>
-		<h1>Zomato Restaurants</h1>
+		<h1>Zomato Restaurant List</h1>
 		<Toolbar/>
 		<RestaurantList/>
 	</div>
